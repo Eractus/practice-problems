@@ -1,24 +1,32 @@
 def three_sum(nums)
+    total = nums.length
+    sorted = nums.sort
+    col = Hash.new(false)
     ans = []
 
+    # for i in 0..(total - 3)
     i = 0
-    while i < nums.length
-        arr1 = [nums[i]]
+    while i < total - 2
+        # next if i > 0 && sorted[i] == sorted[i - 1]
         j = i + 1
-        while j < nums.length
-            arr2 = arr1 + [nums[j]]
-            k = j + 1
-            while k < nums.length
-                if arr2.reduce(:+) + nums[k] == 0
-                    arr3 = (arr2 + [nums[k]]).sort
-                    if !ans.include?(arr3)
-                        ans << arr3
-                        break
-                    end
+        k = total - 1
+        while j < k
+            sum = sorted[i] + sorted[j] + sorted[k]
+            if sum > 0
+                k -= 1
+            elsif sum < 0
+                j += 1
+            else
+                zero_sum = [sorted[i], sorted[j], sorted[k]]
+                if col[zero_sum] != true
+                    col[zero_sum] = true
+                    ans << zero_sum
                 end
-                k += 1
+                j += 1
+                k -= 1
+                j += 1 while sorted[j] == sorted[j - 1]
+                k -= 1 while sorted[k] == sorted[k + 1]
             end
-            j += 1
         end
         i += 1
     end
