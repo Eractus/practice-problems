@@ -16,6 +16,9 @@ class MinHeap {
 
 
   siftUp(curIdx, heap) {
+    if (curIdx === 0) {
+      return heap;
+    }
     let parIdx = Math.floor((curIdx - 1)/2);
     if (heap[curIdx] < heap[parIdx]) {
       [ heap[curIdx], heap[parIdx] ] = [ heap[parIdx], heap[curIdx] ];
